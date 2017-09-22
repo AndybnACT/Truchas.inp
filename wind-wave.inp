@@ -1,0 +1,227 @@
+&MESH
+    Ncell             = 1000, 1, 60
+    Coord             = 3*0.0, 500.0, 100.0, 30.0
+    Fuzz              = 3*0.0
+    Ratio             = 3*1.0
+    Partitions_Total  = 1
+
+/
+
+&OUTPUTS
+
+    Output_T                    = 0.0, 100
+    Output_Dt                   = 1
+    Int_Output_Dt_Multiplier    = 0
+    Gra_Output_Dt_Multiplier    = 1
+    Short_Output_Dt_Multiplier  = 0
+    Long_Output_Dt_Multiplier   = 0
+    User_Output_Dt_Multiplier   = 0
+    Graphics_Format             = 'gmv'
+/
+
+&LINEAR_SOLVER
+
+    name                            = 'projection'
+    method                          = 'fgmres'
+    preconditioning_method          = '2level'
+    preconditioning_preconditioner  = 'ssor'
+    convergence_criterion           = 1.0e-8
+    relaxation_parameter            = 1.4
+    preconditioning_steps           = 2
+    maximum_iterations              = 1000
+
+/
+
+&NUMERICS
+
+    volume_track_interfaces     = .true.
+    volume_track_brents_method  = .true.
+    volume_track_iter_tol       = 1.0e-12
+    projection_linear_solution  = 'projection'
+    discrete_ops_type           = 'ortho'
+    courant_number              = 0.85
+    dt_init                     = 0.001
+    dt_grow                     = 1.2
+    dt_min                      = 1.0e-05
+    dt_max                      = 30.0
+/
+    cycle_max                   = 1
+
+dt_max <= output_dt
+
+&PHYSICS
+
+    Body_Force             = 0.0, 0.0, -9.81
+    fluid_flow             = .true.
+    heat_conduction        = .false.
+    inviscid               = .true.
+    stokes                 = .false.
+    surface_tension_model  = 'off'
+    csf_normal             = .false.
+    csf_tangential         = .false.
+
+    phase_change           = .false.,
+
+/
+
+&INTERFACES
+
+    int_particles  = 5
+    vof_particles  = 10
+
+/
+
+top
+&BC
+
+    Surface_Name     = 'conic'
+    Conic_Relation   = '='
+    Conic_Z          = 1.0
+    Conic_Constant   = -30.0
+    Conic_Tolerance  = 1.0e-6
+    BC_Variable      = 'velocity'
+    BC_Type          = 'dirichlet'
+    BC_Value         = 10.0, 0.0, 0.0
+    INFLOW_MATERIAL = 2
+
+/
+
+bottom
+&BC
+
+    Surface_Name     = 'conic'
+    Conic_Relation   = '='
+    Conic_Z          = 1.0
+    Conic_Constant   = 0.0
+    Conic_Tolerance  = 1.0e-6
+    BC_Variable      = 'velocity'
+    BC_Type          = 'no-slip'
+/
+
+
+
+upper left
+&BC
+
+    Surface_Name     = 'conic'
+    Conic_Relation   = '='
+    Conic_X          = 1.0
+    Conic_Constant   = 0.0
+    Conic_Tolerance  = 1.0e-6
+    BC_Variable      = 'pressure'
+    BC_Type          = 'dirichlet'
+    BC_Value         = 0.0
+    bounding_box     = 0.0, 0.0, 0.0, 100.0, 20.0, 30.0
+    INFLOW_MATERIAL = 2
+/
+
+lower_left
+&BC
+
+    Surface_Name     = 'conic'
+    Conic_Relation   = '='
+    Conic_X          = 1.0
+    Conic_Constant   = 0.0
+    Conic_Tolerance  = 1.0e-6
+    BC_Variable      = 'velocity'
+    BC_Type          = 'no-slip'
+    bounding_box     = 0.0, 0.0, 0.0, 100.0, 0.0, 20.0
+/
+
+upper right
+&BC
+
+    Surface_Name     = 'conic'
+    Conic_Relation   = '='
+    Conic_X          = 1.0
+    Conic_Constant   = -500.0
+    Conic_Tolerance  = 1.0e-6
+    BC_Variable      = 'pressure'
+    BC_Type          = 'dirichlet'
+    BC_Value         = 0.0
+    bounding_box     = 500.0, 500.0, 0.0, 100.0, 20.0, 30.0
+    INFLOW_MATERIAL = 2
+/
+
+lower_right
+&BC
+
+    Surface_Name     = 'conic'
+    Conic_Relation   = '='
+    Conic_X          = 1.0
+    Conic_Constant   = -500.0
+    Conic_Tolerance  = 1.0e-6
+    BC_Variable      = 'velocity'
+    BC_Type          = 'no-slip'
+    INFLOW_MATERIAL  = 1
+    bounding_box     = 500.0, 500.0, 0.0, 100.0, 0.0, 20.0
+/
+
+
+&BODY
+
+    Material_number  = 1
+    Surface_Name     = 'box'
+    Fill             = 'inside'
+    Length           = 1e5, 1e5, 20.0
+    Translation_Pt   = 0.0, 0.0, 10.0
+    Velocity         = 0.0, 0.0, 0.0
+    Temperature      = 273.0
+
+/
+
+
+&BODY
+
+    Material_number  = 2
+    Surface_Name     = 'background'
+    Velocity         = 0.0, 0.0, 0.0
+    Temperature      = 273.0
+
+/
+
+&MATERIAL
+
+    Material_Name           = 'water'
+    Material_Number         = 1
+    priority                = 1
+
+    Density                 = 1000.0
+
+    Cp_Relation             = 'constant'
+    Cp_Constants            = 1.0
+    Cp_Exponents            = 0.0
+    Conductivity_Relation   = 'constant'
+    Conductivity_Constants  = 1.0
+    Conductivity_Exponents  = 0.0
+
+/
+
+&MATERIAL
+
+    Material_Name           = 'air'
+    Material_Number         = 2
+    Material_Feature        = 'background'
+    priority                = 2
+
+    Density                 = 1.2
+
+    Cp_Relation             = 'constant'
+    Cp_Constants            = 1.0
+    Cp_Exponents            = 0.0
+
+    Viscosity_Relation      = 'constant'
+    Viscosity_Constants     = 1e-5
+    Viscosity_Exponents     = 0.0
+
+    Conductivity_Relation   = 'constant'
+    Conductivity_Constants  = 1.0
+    Conductivity_Exponents  = 0.0
+
+/
+
+&PARALLEL_PARAMETERS
+
+    Partitioner  = 'automatic',
+
+/
