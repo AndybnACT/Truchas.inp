@@ -1,6 +1,6 @@
 &MESH
-    Ncell             = 1000, 1, 60
-    Coord             = 3*0.0, 500.0, 100.0, 30.0
+    Ncell             = 60, 1, 60
+    Coord             = 3*0.0, 20.0, 100.0, 20.0
     Fuzz              = 3*0.0
     Ratio             = 3*1.0
     Partitions_Total  = 1
@@ -43,7 +43,7 @@
     dt_init                     = 0.001
     dt_grow                     = 1.2
     dt_min                      = 1.0e-05
-    dt_max                      = 30.0
+    dt_max                      = 20.0
 /
     cycle_max                   = 1
 
@@ -77,11 +77,10 @@ top
     Surface_Name     = 'conic'
     Conic_Relation   = '='
     Conic_Z          = 1.0
-    Conic_Constant   = -30.0
+    Conic_Constant   = -20.0
     Conic_Tolerance  = 1.0e-6
     BC_Variable      = 'velocity'
-    BC_Type          = 'dirichlet'
-    BC_Value         = 10.0, 0.0, 0.0
+    BC_Type          = 'free-slip'
     INFLOW_MATERIAL = 2
 
 /
@@ -95,7 +94,7 @@ bottom
     Conic_Constant   = 0.0
     Conic_Tolerance  = 1.0e-6
     BC_Variable      = 'velocity'
-    BC_Type          = 'no-slip'
+    BC_Type          = 'free-slip'
 /
 
 
@@ -108,10 +107,10 @@ upper left
     Conic_X          = 1.0
     Conic_Constant   = 0.0
     Conic_Tolerance  = 1.0e-6
-    BC_Variable      = 'pressure'
+    BC_Variable      = 'velocity'
     BC_Type          = 'dirichlet'
-    BC_Value         = 0.0
-    bounding_box     = 0.0, 0.0, 0.0, 100.0, 20.0, 30.0
+    BC_Value         = 10.0, 0.0, 0.0
+    bounding_box     = 0.0, 0.0, 0.0, 100.0, 10.0, 20.0
     INFLOW_MATERIAL = 2
 /
 
@@ -125,7 +124,7 @@ lower_left
     Conic_Tolerance  = 1.0e-6
     BC_Variable      = 'velocity'
     BC_Type          = 'no-slip'
-    bounding_box     = 0.0, 0.0, 0.0, 100.0, 0.0, 20.0
+    bounding_box     = 0.0, 0.0, 0.0, 100.0, 0.0, 10.0
 /
 
 upper right
@@ -134,12 +133,12 @@ upper right
     Surface_Name     = 'conic'
     Conic_Relation   = '='
     Conic_X          = 1.0
-    Conic_Constant   = -500.0
+    Conic_Constant   = -20.0
     Conic_Tolerance  = 1.0e-6
     BC_Variable      = 'pressure'
     BC_Type          = 'dirichlet'
     BC_Value         = 0.0
-    bounding_box     = 500.0, 500.0, 0.0, 100.0, 20.0, 30.0
+    bounding_box     = 20.0, 20.0, 0.0, 100.0, 10.0, 20.0
     INFLOW_MATERIAL = 2
 /
 
@@ -149,12 +148,11 @@ lower_right
     Surface_Name     = 'conic'
     Conic_Relation   = '='
     Conic_X          = 1.0
-    Conic_Constant   = -500.0
+    Conic_Constant   = -20.0
     Conic_Tolerance  = 1.0e-6
     BC_Variable      = 'velocity'
     BC_Type          = 'no-slip'
-    INFLOW_MATERIAL  = 1
-    bounding_box     = 500.0, 500.0, 0.0, 100.0, 0.0, 20.0
+    bounding_box     = 20.0, 20.0, 0.0, 100.0, 0.0, 10.0
 /
 
 
@@ -163,8 +161,8 @@ lower_right
     Material_number  = 1
     Surface_Name     = 'box'
     Fill             = 'inside'
-    Length           = 1e5, 1e5, 20.0
-    Translation_Pt   = 0.0, 0.0, 10.0
+    Length           = 1e5, 1e5, 10.0
+    Translation_Pt   = 0.0, 0.0, 5.0
     Velocity         = 0.0, 0.0, 0.0
     Temperature      = 273.0
 
@@ -195,6 +193,10 @@ lower_right
     Conductivity_Constants  = 1.0
     Conductivity_Exponents  = 0.0
 
+    Viscosity_Relation      = 'constant'
+    Viscosity_Constants     = 1e-3
+    Viscosity_Exponents     = 0.0
+
 /
 
 &MATERIAL
@@ -211,7 +213,7 @@ lower_right
     Cp_Exponents            = 0.0
 
     Viscosity_Relation      = 'constant'
-    Viscosity_Constants     = 1e-5
+    Viscosity_Constants     = 1e-3
     Viscosity_Exponents     = 0.0
 
     Conductivity_Relation   = 'constant'
