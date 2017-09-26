@@ -1,6 +1,6 @@
 &MESH
-    Ncell             = 60, 1, 60
-    Coord             = 3*0.0, 20.0, 100.0, 20.0
+    Ncell             = 240, 1, 60
+    Coord             = 3*0.0, 80.0, 100.0, 20.0
     Fuzz              = 3*0.0
     Ratio             = 3*1.0
     Partitions_Total  = 1
@@ -133,12 +133,12 @@ upper right
     Surface_Name     = 'conic'
     Conic_Relation   = '='
     Conic_X          = 1.0
-    Conic_Constant   = -20.0
+    Conic_Constant   = -80.0
     Conic_Tolerance  = 1.0e-6
     BC_Variable      = 'pressure'
     BC_Type          = 'dirichlet'
     BC_Value         = 0.0
-    bounding_box     = 20.0, 20.0, 0.0, 100.0, 10.0, 20.0
+    bounding_box     =80.0, 80.0, 0.0, 100.0, 10.0, 20.0
     INFLOW_MATERIAL = 2
 /
 
@@ -148,11 +148,11 @@ lower_right
     Surface_Name     = 'conic'
     Conic_Relation   = '='
     Conic_X          = 1.0
-    Conic_Constant   = -20.0
+    Conic_Constant   = -80.0
     Conic_Tolerance  = 1.0e-6
     BC_Variable      = 'velocity'
     BC_Type          = 'no-slip'
-    bounding_box     = 20.0, 20.0, 0.0, 100.0, 0.0, 10.0
+    bounding_box     = 80.0, 80.0, 0.0, 100.0, 0.0, 10.0
 /
 
 
