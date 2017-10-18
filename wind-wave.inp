@@ -101,7 +101,7 @@ top [B]
 
     Surface_Name     = 'conic'
     Conic_Relation   = '='
-    Conic_X          = 1.0
+    Conic_Z          = 1.0
     Conic_Constant   = -20.0
     Conic_Tolerance  = 1.0e-6
     BC_Variable      = 'velocity'
