@@ -71,7 +71,19 @@ dt_max <= output_dt
 
 /
 
-top
+BC Descriptions
+
+              wind blowing
+ ======[A]=====|||[B]|||=======[C]======
+p=0            VVVVVVVVV              p=0
+[D]                                   [E]
+p=0                                   p=0
+|||^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^|||
+[F]                                   [G]
+|||_______________[H]_________________|||
+
+
+top [A]
 &BC
 
     Surface_Name     = 'conic'
@@ -81,11 +93,37 @@ top
     Conic_Tolerance  = 1.0e-6
     BC_Variable      = 'velocity'
     BC_Type          = 'free-slip'
-    INFLOW_MATERIAL = 2
-
+    Bounding_Box     = 0.0, 20.0, 0.0, 100.0, 20.0, 20.0
 /
 
-bottom
+top [B]
+&BC
+
+    Surface_Name     = 'conic'
+    Conic_Relation   = '='
+    Conic_X          = 1.0
+    Conic_Constant   = -20.0
+    Conic_Tolerance  = 1.0e-6
+    BC_Variable      = 'velocity'
+    BC_Type          = 'dirichlet'
+    BC_Value         = 0.0, 0.0, -10.0
+    bounding_box     = 40.0, 60.0, 0.0, 100.0, 20.0, 20.0
+    INFLOW_MATERIAL = 2
+/
+
+top [C]
+&BC
+    Surface_Name     = 'conic'
+    Conic_Relation   = '='
+    Conic_Z          = 1.0
+    Conic_Constant   = -20.0
+    Conic_Tolerance  = 1.0e-6
+    BC_Variable      = 'velocity'
+    BC_Type          = 'free-slip'
+    Bounding_Box     = 60.0, 80.0, 0.0, 100.0, 20.0, 20.0
+/
+
+bottom [H]
 &BC
 
     Surface_Name     = 'conic'
@@ -99,7 +137,7 @@ bottom
 
 
 
-upper left
+upper left [D]
 &BC
 
     Surface_Name     = 'conic'
@@ -107,14 +145,14 @@ upper left
     Conic_X          = 1.0
     Conic_Constant   = 0.0
     Conic_Tolerance  = 1.0e-6
-    BC_Variable      = 'velocity'
+    BC_Variable      = 'pressure'
     BC_Type          = 'dirichlet'
-    BC_Value         = 10.0, 0.0, 0.0
+    BC_Value         = 0.0
     bounding_box     = 0.0, 0.0, 0.0, 100.0, 10.0, 20.0
     INFLOW_MATERIAL = 2
 /
 
-lower_left
+lower_left [F]
 &BC
 
     Surface_Name     = 'conic'
@@ -127,7 +165,7 @@ lower_left
     bounding_box     = 0.0, 0.0, 0.0, 100.0, 0.0, 10.0
 /
 
-upper right
+upper right [E]
 &BC
 
     Surface_Name     = 'conic'
@@ -138,11 +176,11 @@ upper right
     BC_Variable      = 'pressure'
     BC_Type          = 'dirichlet'
     BC_Value         = 0.0
-    bounding_box     =80.0, 80.0, 0.0, 100.0, 10.0, 20.0
+    bounding_box     = 80.0, 80.0, 0.0, 100.0, 10.0, 20.0
     INFLOW_MATERIAL = 2
 /
 
-lower_right
+lower_right [G]
 &BC
 
     Surface_Name     = 'conic'
