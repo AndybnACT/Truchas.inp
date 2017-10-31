@@ -107,7 +107,7 @@ top [B]
     BC_Variable      = 'velocity'
     BC_Type          = 'dirichlet'
     BC_Value         = 0.0, 0.0, -10.0
-    bounding_box     = 40.0, 60.0, 0.0, 100.0, 20.0, 20.0
+    bounding_box     = 30.0, 50.0, 0.0, 100.0, 20.0, 20.0
     INFLOW_MATERIAL = 2
 /
 
@@ -149,7 +149,7 @@ upper left [D]
     BC_Type          = 'dirichlet'
     BC_Value         = 0.0
     bounding_box     = 0.0, 0.0, 0.0, 100.0, 10.0, 20.0
-    INFLOW_MATERIAL = 2
+    INFLOW_MATERIAL = 3
 /
 
 lower_left [F]
@@ -177,7 +177,7 @@ upper right [E]
     BC_Type          = 'dirichlet'
     BC_Value         = 0.0
     bounding_box     = 80.0, 80.0, 0.0, 100.0, 10.0, 20.0
-    INFLOW_MATERIAL = 2
+    INFLOW_MATERIAL = 3
 /
 
 lower_right [G]
@@ -252,6 +252,28 @@ lower_right [G]
 
     Viscosity_Relation      = 'constant'
     Viscosity_Constants     = 1e-3
+    Viscosity_Exponents     = 0.0
+
+    Conductivity_Relation   = 'constant'
+    Conductivity_Constants  = 1.0
+    Conductivity_Exponents  = 0.0
+
+/
+
+&MATERIAL
+
+    Material_Name           = 'void'
+    Material_Number         = 3
+    priority                = 3
+
+    Density                 = 0.0
+
+    Cp_Relation             = 'constant'
+    Cp_Constants            = 1.0
+    Cp_Exponents            = 0.0
+
+    Viscosity_Relation      = 'constant'
+    Viscosity_Constants     = 0.0
     Viscosity_Exponents     = 0.0
 
     Conductivity_Relation   = 'constant'
